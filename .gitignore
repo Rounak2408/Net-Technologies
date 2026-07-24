@@ -1,0 +1,6 @@
+# Ignore executables and build outputs
+*.exe
+*.dll
+*.pdb
+bin/
+obj/
