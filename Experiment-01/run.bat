@@ -1,3 +1,4 @@
+:: Experiment-01: Student Admission Management System
 @echo off
 echo Compiling Program.cs...
 C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /out:StudentAdmissionManagement.exe Program.cs
