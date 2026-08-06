@@ -4,3 +4,7 @@
 *.pdb
 bin/
 obj/
+
+# Ignore local database and log files
+*.csv
+*.txt

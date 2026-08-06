@@ -720,6 +720,17 @@ namespace ExpenseTracker
         {
             Console.Title = "Enterprise Expense Tracker Module";
             
+            // Set culture to en-IN for Rupees formatting
+            try
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-IN");
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-IN");
+            }
+            catch
+            {
+                // Fallback gracefully if culture is not available
+            }
+
             // Initialization
             _budgetManager = new BudgetManager(50000, false); // Default 50k warning-mode budget
             _repo = new ExpenseRepository(_budgetManager, "expenses.csv");
@@ -901,7 +912,7 @@ namespace ExpenseTracker
             if (string.IsNullOrWhiteSpace(desc))
                 throw new ExpenseValidationException("Description cannot be null or empty.");
 
-            Console.Write("Enter Amount ($): ");
+            Console.Write("Enter Amount (Rs.): ");
             string inputAmount = ReadTrimmedLine();
             double amt;
             if (!double.TryParse(inputAmount, out amt))
