@@ -1,0 +1,38 @@
+@model Experiment_06.Models.Product
+
+@{
+    ViewData["Title"] = Model.Name + " Details";
+}
+
+<div style="margin-bottom:15px;">
+    <a href="/Product/Index" class="btn btn-secondary">&larr; Back to Catalog</a>
+</div>
+
+<div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:25px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:15px; border-bottom:1px solid #e2e8f0; padding-bottom:12px;">
+        <div>
+            <h2 style="font-size:1.5rem; color:#0f172a; margin-bottom:4px;">@Model.Name</h2>
+            <span style="background:#e0f2fe; color:#0369a1; padding:4px 10px; border-radius:4px; font-weight:600; font-size:0.85rem;">Category: @Model.Category</span>
+        </div>
+        <div style="text-align:right;">
+            <div style="font-size:1.6rem; font-weight:800; color:#1d4ed8;">Rs. @Model.Price.ToString("N0")</div>
+            @if (Model.IsInStock)
+            {
+                <span style="background:#dcfce7; color:#15803d; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-top:4px;">In Stock</span>
+            }
+            else
+            {
+                <span style="background:#fee2e2; color:#b91c1c; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-top:4px;">Out of Stock</span>
+            }
+        </div>
+    </div>
+
+    <div style="margin-bottom:20px;">
+        <h4 style="color:#475569; margin-bottom:6px; font-size:0.95rem;">Product Description:</h4>
+        <p style="font-size:1.05rem; line-height:1.5; color:#1e293b;">@Model.Description</p>
+    </div>
+
+    <div style="background:#ffffff; border:1px solid #e2e8f0; padding:15px; border-radius:6px; font-size:0.88rem; color:#64748b;">
+        <strong>MVC Route Info:</strong> Controller: <code>ProductController</code> | Action: <code>Details</code> | Parameter: <code>id = @Model.Id</code>
+    </div>
+</div>

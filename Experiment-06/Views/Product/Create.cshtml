@@ -1,0 +1,49 @@
+@model Experiment_06.Models.Product
+
+@{
+    ViewData["Title"] = "Add New Product";
+}
+
+<div style="margin-bottom:15px;">
+    <a href="/Product/Index" class="btn btn-secondary">&larr; Back to Catalog</a>
+</div>
+
+<h2>Add New Product to Catalog</h2>
+<p style="color:#64748b; font-size:0.9rem; margin-bottom:20px;">Fill in the product details below to add it to the in-memory product repository.</p>
+
+<form method="post" action="/Product/Create" style="max-width:600px;">
+    @Html.AntiForgeryToken()
+    
+    <div style="margin-bottom:15px;">
+        <label style="display:block; font-weight:600; margin-bottom:4px;">Product Name: *</label>
+        <input type="text" name="Name" value="@Model?.Name" required style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.95rem;" placeholder="e.g. Mechanical Gaming Keyboard" />
+    </div>
+
+    <div style="margin-bottom:15px;">
+        <label style="display:block; font-weight:600; margin-bottom:4px;">Category: *</label>
+        <select name="Category" required style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.95rem;">
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Stationery">Stationery</option>
+            <option value="Accessories">Accessories</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom:15px;">
+        <label style="display:block; font-weight:600; margin-bottom:4px;">Price (Rs.): *</label>
+        <input type="number" name="Price" value="@Model?.Price" required min="1" step="0.01" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.95rem;" placeholder="e.g. 2999" />
+    </div>
+
+    <div style="margin-bottom:15px;">
+        <label style="display:block; font-weight:600; margin-bottom:4px;">Description:</label>
+        <textarea name="Description" rows="3" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.95rem;" placeholder="Brief product summary..."></textarea>
+    </div>
+
+    <div style="margin-bottom:20px;">
+        <label style="font-weight:600;">
+            <input type="checkbox" name="IsInStock" value="true" checked /> Is Product in Stock?
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-success" style="padding:10px 24px;">Save Product</button>
+</form>

@@ -1,0 +1,74 @@
+@model IEnumerable<Experiment_06.Models.Product>
+
+@{
+    ViewData["Title"] = "Product Catalog";
+    var currentCategory = ViewBag.CurrentCategory as string;
+    var currentSearch = ViewBag.CurrentSearch as string;
+    var categories = ViewBag.Categories as List<string>;
+}
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
+    <h2>Product Catalog (@Model.Count() Products)</h2>
+    
+    <form method="get" action="/Product/Index" style="display:flex; gap:8px;">
+        <input type="text" name="search" value="@currentSearch" placeholder="Search product name..." style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.9rem;" />
+        <button type="submit" class="btn btn-primary">Search</button>
+        @if (!string.IsNullOrEmpty(currentSearch) || !string.IsNullOrEmpty(currentCategory))
+        {
+            <a href="/Product/Index" class="btn btn-secondary">Clear Filter</a>
+        }
+    </form>
+</div>
+
+@if (!string.IsNullOrEmpty(currentCategory))
+{
+    <div style="background:#e0f2fe; color:#0369a1; padding:8px 14px; border-radius:6px; font-weight:600; margin-bottom:15px;">
+        Category Filter Active: @currentCategory
+    </div>
+}
+
+<table style="width:100%; border-collapse:collapse;">
+    <thead>
+        <tr style="background:#f1f5f9; border-bottom:2px solid #cbd5e1; text-align:left;">
+            <th style="padding:10px;">ID</th>
+            <th style="padding:10px;">Product Name</th>
+            <th style="padding:10px;">Category</th>
+            <th style="padding:10px;">Price (Rs.)</th>
+            <th style="padding:10px;">Availability</th>
+            <th style="padding:10px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="6" style="padding:20px; text-align:center; color:#64748b;">No products found matching criteria.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                    <td style="padding:10px; font-weight:bold;">#@item.Id</td>
+                    <td style="padding:10px; font-weight:600; color:#0f172a;">@item.Name</td>
+                    <td style="padding:10px;"><span style="background:#f1f5f9; padding:3px 8px; border-radius:4px; font-size:0.85rem; font-weight:600;">@item.Category</span></td>
+                    <td style="padding:10px; font-weight:bold; color:#1d4ed8;">Rs. @item.Price.ToString("N0")</td>
+                    <td style="padding:10px;">
+                        @if (item.IsInStock)
+                        {
+                            <span style="background:#dcfce7; color:#15803d; padding:3px 8px; border-radius:4px; font-size:0.8rem; font-weight:bold;">In Stock</span>
+                        }
+                        else
+                        {
+                            <span style="background:#fee2e2; color:#b91c1c; padding:3px 8px; border-radius:4px; font-size:0.8rem; font-weight:bold;">Out of Stock</span>
+                        }
+                    </td>
+                    <td style="padding:10px;">
+                        <a href="/Product/Details/@item.Id" class="btn btn-primary" style="padding:4px 10px; font-size:0.82rem;">View Details</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
