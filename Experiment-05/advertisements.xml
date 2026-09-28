@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Advertisements>
+  <Ad>
+    <ImageUrl>https://img.icons8.com/color/96/graduation-cap.png</ImageUrl>
+    <NavigateUrl>#</NavigateUrl>
+    <AlternateText>Mid-Semester Examination Schedule</AlternateText>
+    <Impressions>50</Impressions>
+    <Keyword>Exams</Keyword>
+    <Caption>Notice: Mid-Semester Examinations start Oct 15 - Oct 20. Check academic calendar for subject timetable.</Caption>
+  </Ad>
+  <Ad>
+    <ImageUrl>https://img.icons8.com/color/96/calendar--v1.png</ImageUrl>
+    <NavigateUrl>#</NavigateUrl>
+    <AlternateText>Annual Cultural and Tech Fest 2026</AlternateText>
+    <Impressions>50</Impressions>
+    <Keyword>Events</Keyword>
+    <Caption>Event Notice: TechFest 2026 scheduled for Nov 5 - Nov 7. Apply for Duty Leave (AL) in advance!</Caption>
+  </Ad>
+  <Ad>
+    <ImageUrl>https://img.icons8.com/color/96/leave.png</ImageUrl>
+    <NavigateUrl>#</NavigateUrl>
+    <AlternateText>Academic Leave Policy Reminder</AlternateText>
+    <Impressions>50</Impressions>
+    <Keyword>Policy</Keyword>
+    <Caption>Policy Notice: Medical Leave exceeding 2 days requires uploading a medical certificate.</Caption>
+  </Ad>
+</Advertisements>

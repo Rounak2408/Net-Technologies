@@ -8,5 +8,7 @@ This repository contains practical implementations for Net Technologies.
 *   [Experiment-02](Experiment-02/Program.cs): Employee Payroll System using OOP (Inheritance, Interface, Polymorphism) in C#
 *   [Experiment-03](Experiment-03/Program.cs): Expense Tracking Module with Exception Handling, CSV Database Persistence and Analytical Reporting in C#
 *   [Experiment-04](Experiment-04/Default.aspx): Online Student Event Registration Portal using ASP.NET Controls & Validation
+*   [Experiment-05](Experiment-05/Default.aspx): Academic Calendar & Leave Management System using ASP.NET Rich Controls, Session State & Cookies
+
 
 
