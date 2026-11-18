@@ -48,13 +48,13 @@
             <div class="card-body p-4 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-muted small fw-semibold text-uppercase tracking-wider">Inventory Value</span>
-                    <h2 class="display-6 fw-bold text-navy mt-1 mb-0">$@Model.TotalInventoryValue.ToString("N2")</h2>
+                    <h2 class="display-6 fw-bold text-navy mt-1 mb-0">₹@Model.TotalInventoryValue.ToString("N2")</h2>
                     <span class="badge bg-info-subtle text-info-emphasis mt-2 small">
                         <i class="bi bi-cash-coin me-1"></i> Total Asset Value
                     </span>
                 </div>
                 <div class="stat-icon-box bg-info-subtle text-info">
-                    <i class="bi bi-currency-dollar"></i>
+                    <i class="bi bi-currency-rupee"></i>
                 </div>
             </div>
         </div>
@@ -152,8 +152,8 @@
                             <th>Product Name</th>
                             <th>Category</th>
                             <th class="text-center">Stock</th>
-                            <th class="text-end">Unit Price</th>
-                            <th class="text-end">Total Value</th>
+                            <th class="text-end">Unit Price (₹)</th>
+                            <th class="text-end">Total Value (₹)</th>
                             <th>Supplier</th>
                             <th class="text-center pe-4">Actions</th>
                         </tr>
@@ -191,8 +191,8 @@
                                         </span>
                                     }
                                 </td>
-                                <td class="text-end fw-semibold">$@item.UnitPrice.ToString("N2")</td>
-                                <td class="text-end fw-bold text-navy">$@item.TotalValue.ToString("N2")</td>
+                                <td class="text-end fw-semibold">₹@item.UnitPrice.ToString("N2")</td>
+                                <td class="text-end fw-bold text-navy">₹@item.TotalValue.ToString("N2")</td>
                                 <td>
                                     <div class="small text-secondary"><i class="bi bi-building me-1 text-muted"></i>@item.SupplierName</div>
                                 </td>

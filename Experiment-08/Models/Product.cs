@@ -30,7 +30,7 @@ namespace Experiment_08.Models
         [Required(ErrorMessage = "Unit Price is required.")]
         [Range(0.01, 10000000.00, ErrorMessage = "Unit Price must be greater than zero.")]
         [DataType(DataType.Currency)]
-        [Display(Name = "Unit Price ($)")]
+        [Display(Name = "Unit Price (₹)")]
         public decimal UnitPrice { get; set; }
 
         [Required(ErrorMessage = "Supplier Name is required.")]

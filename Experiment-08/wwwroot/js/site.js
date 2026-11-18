@@ -1,4 +1,4 @@
-﻿/**
+/**
  * InventoryHub - Application JavaScript
  * Experiment 08 - ASP.NET Core MVC using ADO.NET & SQL Server
  */
