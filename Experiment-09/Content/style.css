@@ -1,0 +1,383 @@
+/* ==========================================================================
+   PlacementHub - Placement Management Dashboard Stylesheet
+   Exercise 9 – ASP.NET Web Forms using Data Controls
+   ========================================================================== */
+
+:root {
+    --navy-primary: #0f2942;
+    --navy-dark: #0a1c2e;
+    --navy-light: #e8f1f8;
+    --navy-subtle: #d0e2f2;
+    --accent-blue: #1d72b8;
+    --accent-cyan: #00bcd4;
+    --accent-gold: #f59e0b;
+    --bg-page: #F5F7FB;
+    --bg-card: #ffffff;
+    --text-navy: #0f2942;
+    --text-dark: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 10px 25px -5px rgba(15, 41, 66, 0.06), 0 8px 10px -6px rgba(15, 41, 66, 0.04);
+    --card-hover-shadow: 0 20px 30px -10px rgba(15, 41, 66, 0.12), 0 12px 14px -6px rgba(15, 41, 66, 0.07);
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-dark);
+    background-color: var(--bg-page);
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+.bg-page {
+    background-color: var(--bg-page);
+}
+
+.bg-navy {
+    background-color: var(--navy-primary) !important;
+}
+
+.bg-navy-dark {
+    background-color: var(--navy-dark) !important;
+}
+
+.bg-navy-light {
+    background-color: var(--navy-light) !important;
+}
+
+.text-navy {
+    color: var(--navy-primary) !important;
+}
+
+.text-cyan {
+    color: var(--accent-cyan) !important;
+}
+
+/* Layout with Sidebar */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #0f2942 0%, #0a1c2e 100%);
+    color: #ffffff;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+}
+
+.app-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.sidebar-header {
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-icon-box {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #00bcd4, #1d72b8);
+    color: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 10px rgba(0, 188, 212, 0.3);
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.brand-subtitle {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+}
+
+.sidebar-nav {
+    padding: 1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.sidebar-link {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.sidebar-link i {
+    font-size: 1.15rem;
+    width: 26px;
+}
+
+.sidebar-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(3px);
+}
+
+.sidebar-link.active {
+    color: #ffffff;
+    background: linear-gradient(135deg, #00bcd4, #1d72b8);
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.35);
+    font-weight: 600;
+}
+
+/* Stat Cards */
+.stat-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 16px;
+    background-color: #ffffff;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.stat-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Buttons */
+.btn-navy {
+    background-color: var(--navy-primary);
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-navy:hover,
+.btn-navy:focus {
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 41, 66, 0.25);
+}
+
+.btn-outline-navy {
+    border: 2px solid var(--navy-primary);
+    color: var(--navy-primary);
+    background: transparent;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-navy:hover {
+    background-color: var(--navy-primary);
+    color: #ffffff;
+}
+
+.btn-accent {
+    background: linear-gradient(135deg, #00bcd4, #1d72b8);
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-accent:hover {
+    background: linear-gradient(135deg, #00acc1, #1565c0);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 188, 212, 0.35);
+}
+
+/* ASP.NET GridView Styling */
+.table-gridview {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-gridview th {
+    background-color: #f8fafc;
+    color: var(--navy-primary);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.9rem 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.table-gridview th a {
+    color: var(--navy-primary);
+    text-decoration: none;
+}
+
+.table-gridview td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.table-gridview tr:hover td {
+    background-color: #f8fafc;
+}
+
+/* GridView Pager Styling */
+.table-gridview .gridview-pager td {
+    padding: 0.75rem 1rem;
+    background-color: #f8fafc;
+    border-top: 2px solid #e2e8f0;
+}
+
+.table-gridview .gridview-pager a,
+.table-gridview .gridview-pager span {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    margin: 0 2px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.88rem;
+}
+
+.table-gridview .gridview-pager a {
+    color: var(--navy-primary);
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+}
+
+.table-gridview .gridview-pager a:hover {
+    background-color: var(--navy-light);
+}
+
+.table-gridview .gridview-pager span {
+    background-color: var(--navy-primary);
+    color: #ffffff;
+    border: 1px solid var(--navy-primary);
+}
+
+/* ASP.NET DetailsView Styling */
+.table-detailsview {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table-detailsview td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-detailsview td:first-child {
+    font-weight: 600;
+    color: var(--navy-primary);
+    width: 35%;
+    background-color: #f8fafc;
+}
+
+/* ASP.NET FormView Styling */
+.formview-container {
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 14px;
+}
+
+/* ASP.NET DataList & Repeater Cards */
+.student-datalist-card,
+.company-repeater-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.student-datalist-card:hover,
+.company-repeater-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.card-top-accent {
+    height: 4px;
+    width: 100%;
+}
+
+.accent-google { background: #ea4335; }
+.accent-microsoft { background: #00a4ef; }
+.accent-amazon { background: #ff9900; }
+.accent-cisco { background: #1ba0d7; }
+.accent-deloitte { background: #86bc25; }
+.accent-tcs { background: #0f2942; }
+.accent-infosys { background: #007cc3; }
+.accent-default { background: #1d72b8; }
+
+.badge-placed {
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.badge-unplaced {
+    background-color: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+
+.avatar-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f2942, #1d72b8);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 3px 8px rgba(15, 41, 66, 0.2);
+}
+
+/* Empty State */
+.empty-icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+@media (max-width: 991.98px) {
+    .app-wrapper {
+        flex-direction: column;
+    }
+    .app-sidebar {
+        width: 100%;
+    }
+}
