@@ -13,6 +13,7 @@ This repository contains practical implementations for Net Technologies.
 *   [Experiment-07](Experiment-07/Program.cs): Feedback Management Module using ASP.NET Core MVC Architecture (Controllers, Models, Views, Partial Views, HTML Helpers, Data Annotations)
 *   [Experiment-08](Experiment-08/Program.cs): Inventory Management System using ASP.NET Core MVC, ADO.NET and SQL Server (Full CRUD, Dashboard Analytics)
 *   [Experiment-09](Experiment-09/Default.aspx): Placement Management Dashboard using ASP.NET Web Forms, ADO.NET & Data Controls (GridView, DetailsView, FormView, Repeater, DataList)
+*   [Experiment-10](Experiment-10/Program.cs): Student Management REST API using ASP.NET Core Web API, Custom Middleware & ADO.NET (REST CRUD, Swagger UI, Request Logging, Timing & Global Exception Handling)
 
 
 
