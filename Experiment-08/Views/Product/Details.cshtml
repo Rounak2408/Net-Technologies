@@ -1,0 +1,116 @@
+@model Experiment_08.Models.Product
+
+@{
+    ViewData["Title"] = $"Product Details - {Model.ProductName}";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a asp-action="Index" class="text-navy">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Product Details (#@Model.ProductId)</li>
+            </ol>
+        </nav>
+
+        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden mb-4">
+            <div class="card-header bg-navy text-white p-4">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <div>
+                        <span class="badge bg-navy-light text-cyan rounded-pill px-3 py-1 small mb-2 d-inline-block">
+                            Product #@Model.ProductId
+                        </span>
+                        <h3 class="fw-bold mb-0">@Model.ProductName</h3>
+                    </div>
+                    <div>
+                        <span class="badge bg-white text-navy fs-6 px-3 py-2 rounded-pill shadow-sm">
+                            <i class="bi bi-tag-fill me-1 text-primary"></i> @Model.Category
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-4 p-md-5">
+                <!-- Stock Status & Price Banner -->
+                <div class="row g-3 p-3 bg-light-subtle rounded-3 border mb-4 text-center">
+                    <div class="col-sm-4 border-end-sm">
+                        <span class="text-muted small fw-semibold text-uppercase">Stock Level</span>
+                        <div class="mt-1">
+                            @if (Model.IsLowStock)
+                            {
+                                <span class="badge bg-danger text-white rounded-pill px-3 py-2 fs-6">
+                                    <i class="bi bi-exclamation-triangle-fill me-1"></i> @Model.Quantity Units (Low Stock!)
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2 fs-6">
+                                    <i class="bi bi-check-circle-fill me-1"></i> @Model.Quantity Units (In Stock)
+                                </span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-4 border-end-sm">
+                        <span class="text-muted small fw-semibold text-uppercase">Unit Price</span>
+                        <div class="fs-4 fw-bold text-navy mt-1">
+                            $@Model.UnitPrice.ToString("N2")
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="text-muted small fw-semibold text-uppercase">Total Inventory Value</span>
+                        <div class="fs-4 fw-bold text-success mt-1">
+                            $@Model.TotalValue.ToString("N2")
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Specifications Grid -->
+                <h6 class="fw-bold text-navy text-uppercase tracking-wider small mb-3 border-bottom pb-2">
+                    <i class="bi bi-info-circle me-1 text-primary"></i> Specifications & Metadata
+                </h6>
+
+                <div class="row g-3 mb-4 small">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3">
+                            <span class="text-muted d-block mb-1">Supplier / Vendor:</span>
+                            <span class="fw-bold text-dark fs-6"><i class="bi bi-building me-1 text-muted"></i>@Model.SupplierName</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3">
+                            <span class="text-muted d-block mb-1">Created / Recorded Date:</span>
+                            <span class="fw-bold text-dark fs-6"><i class="bi bi-calendar3 me-1 text-muted"></i>@Model.CreatedDate.ToString("dd MMMM yyyy, hh:mm tt")</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="p-3 bg-light rounded-3">
+                            <span class="text-muted d-block mb-1">Description:</span>
+                            <p class="mb-0 text-secondary" style="line-height: 1.6;">
+                                @(string.IsNullOrWhiteSpace(Model.Description) ? "No detailed description provided for this product." : Model.Description)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions Footer -->
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-3 border-top">
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Products
+                    </a>
+                    <div class="d-flex gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary-custom rounded-pill px-4 py-2 btn-navy">
+                            <i class="bi bi-pencil me-1"></i> Edit Product
+                        </a>
+                        <form asp-action="Delete" asp-route-id="@Model.ProductId" method="post" onsubmit="return confirm('Are you sure you want to delete \'@Model.ProductName\'?');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-danger rounded-pill px-4 py-2">
+                                <i class="bi bi-trash3 me-1"></i> Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

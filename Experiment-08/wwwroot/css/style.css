@@ -1,0 +1,239 @@
+/* ==========================================================================
+   InventoryHub - Admin Dashboard & Product Management Stylesheet
+   Experiment 08 - ASP.NET Core MVC using ADO.NET & SQL Server
+   ========================================================================== */
+
+:root {
+    --navy-primary: #0f2942;
+    --navy-dark: #0a1c2e;
+    --navy-light: #e8f1f8;
+    --navy-subtle: #d0e2f2;
+    --accent-blue: #1d72b8;
+    --accent-cyan: #00bcd4;
+    --bg-page: #F5F7FB;
+    --bg-card: #ffffff;
+    --text-navy: #0f2942;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 10px 25px -5px rgba(15, 41, 66, 0.06), 0 8px 10px -6px rgba(15, 41, 66, 0.04);
+    --card-hover-shadow: 0 20px 30px -10px rgba(15, 41, 66, 0.12), 0 12px 14px -6px rgba(15, 41, 66, 0.07);
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-dark);
+    background-color: var(--bg-page);
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+}
+
+.bg-page {
+    background-color: var(--bg-page);
+}
+
+.bg-navy {
+    background-color: var(--navy-primary) !important;
+}
+
+.bg-navy-light {
+    background-color: var(--navy-light) !important;
+}
+
+.text-navy {
+    color: var(--navy-primary) !important;
+}
+
+.text-cyan {
+    color: var(--accent-cyan) !important;
+}
+
+/* Brand Box */
+.brand-icon-box {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #00bcd4, #1d72b8);
+    color: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 10px rgba(0, 188, 212, 0.3);
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.brand-subtitle {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons */
+.btn-navy {
+    background-color: var(--navy-primary);
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-navy:hover,
+.btn-navy:focus {
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 41, 66, 0.25);
+}
+
+.btn-outline-navy {
+    border: 2px solid var(--navy-primary);
+    color: var(--navy-primary);
+    background: transparent;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-navy:hover {
+    background-color: var(--navy-primary);
+    color: #ffffff;
+}
+
+.btn-accent {
+    background: linear-gradient(135deg, #00bcd4, #1d72b8);
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-accent:hover {
+    background: linear-gradient(135deg, #00acc1, #1565c0);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 188, 212, 0.35);
+}
+
+/* Stat Cards */
+.stat-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background-color: #ffffff;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.stat-icon-box {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Custom Table */
+.custom-table th {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.custom-table td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.table-warning-subtle {
+    background-color: #fffbeb !important;
+}
+
+.action-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+    transition: transform 0.15s ease;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Form inputs */
+.form-control,
+.form-select {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #1d72b8;
+    box-shadow: 0 0 0 3px rgba(29, 114, 184, 0.15);
+}
+
+.input-group-text {
+    border-radius: 10px 0 0 10px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+}
+
+.input-group > .form-control,
+.input-group > .form-select {
+    border-radius: 0 10px 10px 0;
+}
+
+/* Empty State */
+.empty-icon-circle {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+}
+
+.alert-icon-box {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+}
+
+.border-navy-light {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}

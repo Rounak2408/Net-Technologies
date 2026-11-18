@@ -1,0 +1,251 @@
+@model Experiment_08.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Inventory Dashboard & Product Management";
+}
+
+<!-- Dashboard Overview Cards -->
+<div class="row g-3 mb-4">
+    <!-- Total Products -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase tracking-wider">Total Products</span>
+                    <h2 class="display-6 fw-bold text-navy mt-1 mb-0">@Model.TotalProducts</h2>
+                    <span class="badge bg-primary-subtle text-primary mt-2 small">
+                        <i class="bi bi-boxes me-1"></i> Unique SKUs
+                    </span>
+                </div>
+                <div class="stat-icon-box bg-primary-subtle text-primary">
+                    <i class="bi bi-box-seam-fill"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Stock Quantity -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase tracking-wider">Total Stock Units</span>
+                    <h2 class="display-6 fw-bold text-navy mt-1 mb-0">@Model.TotalStockQuantity.ToString("N0")</h2>
+                    <span class="badge bg-success-subtle text-success mt-2 small">
+                        <i class="bi bi-check-circle me-1"></i> Units in Warehouse
+                    </span>
+                </div>
+                <div class="stat-icon-box bg-success-subtle text-success">
+                    <i class="bi bi-stack"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Inventory Value -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase tracking-wider">Inventory Value</span>
+                    <h2 class="display-6 fw-bold text-navy mt-1 mb-0">$@Model.TotalInventoryValue.ToString("N2")</h2>
+                    <span class="badge bg-info-subtle text-info-emphasis mt-2 small">
+                        <i class="bi bi-cash-coin me-1"></i> Total Asset Value
+                    </span>
+                </div>
+                <div class="stat-icon-box bg-info-subtle text-info">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Low Stock Alert -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase tracking-wider">Low Stock Warning</span>
+                    <h2 class="display-6 fw-bold @(Model.LowStockCount > 0 ? "text-danger" : "text-navy") mt-1 mb-0">
+                        @Model.LowStockCount
+                    </h2>
+                    <span class="badge @(Model.LowStockCount > 0 ? "bg-danger-subtle text-danger" : "bg-light text-muted") mt-2 small">
+                        <i class="bi @(Model.LowStockCount > 0 ? "bi-exclamation-triangle-fill" : "bi-check2") me-1"></i>
+                        Threshold: &lt; 10 units
+                    </span>
+                </div>
+                <div class="stat-icon-box @(Model.LowStockCount > 0 ? "bg-danger-subtle text-danger" : "bg-secondary-subtle text-secondary")">
+                    <i class="bi bi-bell-fill"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Products Management Section -->
+<div class="card border-0 shadow-sm rounded-4 bg-white mb-5">
+    <div class="card-header bg-white border-bottom p-4">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>
+                <h4 class="fw-bold text-navy mb-1">Products Management</h4>
+                <p class="text-muted small mb-0">Browse, search, edit and manage warehouse inventory records via ADO.NET</p>
+            </div>
+            <div>
+                <a asp-controller="Product" asp-action="Create" class="btn btn-navy rounded-pill px-4 py-2 shadow-sm d-flex align-items-center">
+                    <i class="bi bi-plus-circle-fill me-2"></i> Add New Product
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="card-body p-4 border-bottom bg-light-subtle">
+        <form method="get" asp-controller="Product" asp-action="Index" class="row g-2 align-items-center">
+            <div class="col-lg-5 col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" name="searchString" value="@Model.SearchString" class="form-control border-start-0 ps-0" placeholder="Search by Product Name or Supplier..." />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-funnel"></i></span>
+                    <select name="category" class="form-select border-start-0 ps-0">
+                        <option value="">-- All Categories --</option>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            if (string.Equals(Model.SelectedCategory, cat, StringComparison.OrdinalIgnoreCase))
+                            {
+                                <option value="@cat" selected>@cat</option>
+                            }
+                            else
+                            {
+                                <option value="@cat">@cat</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-outline-navy rounded-pill px-4 flex-grow-1">
+                    <i class="bi bi-filter me-1"></i> Filter
+                </button>
+                @if (!string.IsNullOrEmpty(Model.SearchString) || !string.IsNullOrEmpty(Model.SelectedCategory))
+                {
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-light rounded-pill px-3" title="Clear Filters">
+                        <i class="bi bi-x-circle"></i>
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
+
+    <!-- Table of Products -->
+    <div class="card-body p-0">
+        @if (Model.Products != null && Model.Products.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 custom-table">
+                    <thead class="table-light text-navy text-uppercase small">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th class="text-center">Stock</th>
+                            <th class="text-end">Unit Price</th>
+                            <th class="text-end">Total Value</th>
+                            <th>Supplier</th>
+                            <th class="text-center pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Products)
+                        {
+                            <tr class="@(item.IsLowStock ? "table-warning-subtle" : "")">
+                                <td class="ps-4 fw-bold text-muted small">#@item.ProductId</td>
+                                <td>
+                                    <div class="fw-bold text-navy">@item.ProductName</div>
+                                    @if (!string.IsNullOrEmpty(item.Description))
+                                    {
+                                        <div class="text-muted small text-truncate" style="max-width: 250px;" title="@item.Description">
+                                            @item.Description
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary-subtle text-secondary border px-3 py-1 rounded-pill">
+                                        @item.Category
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    @if (item.IsLowStock)
+                                    {
+                                        <span class="badge bg-danger text-white rounded-pill px-2 py-1 small" title="Low stock alert!">
+                                            <i class="bi bi-exclamation-triangle-fill me-1"></i> @item.Quantity
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 fw-bold">
+                                            @item.Quantity
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-end fw-semibold">$@item.UnitPrice.ToString("N2")</td>
+                                <td class="text-end fw-bold text-navy">$@item.TotalValue.ToString("N2")</td>
+                                <td>
+                                    <div class="small text-secondary"><i class="bi bi-building me-1 text-muted"></i>@item.SupplierName</div>
+                                </td>
+                                <td class="text-center pe-4">
+                                    <div class="d-inline-flex gap-1">
+                                        <!-- View Details -->
+                                        <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-info rounded-circle action-btn" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <!-- Edit -->
+                                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-primary rounded-circle action-btn" title="Edit Product">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <!-- Delete with Confirmation -->
+                                        <form asp-action="Delete" asp-route-id="@item.ProductId" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete \'@item.ProductName\' (ID #@item.ProductId)?');">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle action-btn" title="Delete Product">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <!-- Empty State -->
+            <div class="text-center py-5 px-3">
+                <div class="empty-icon-circle bg-light text-muted d-flex align-items-center justify-content-center mx-auto mb-3">
+                    <i class="bi bi-box-seam fs-1"></i>
+                </div>
+                <h4 class="fw-bold text-navy mb-2">No Products Found</h4>
+                <p class="text-muted max-w-500 mx-auto mb-4">
+                    @(string.IsNullOrEmpty(Model.SearchString) && string.IsNullOrEmpty(Model.SelectedCategory) 
+                        ? "There are currently no products in the inventory database." 
+                        : "No products matched your search or category filter.")
+                </p>
+                <div class="d-flex justify-content-center gap-2">
+                    @if (!string.IsNullOrEmpty(Model.SearchString) || !string.IsNullOrEmpty(Model.SelectedCategory))
+                    {
+                        <a asp-action="Index" class="btn btn-outline-navy rounded-pill px-4 py-2">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Filters
+                        </a>
+                    }
+                    <a asp-action="Create" class="btn btn-navy rounded-pill px-4 py-2">
+                        <i class="bi bi-plus-circle me-1"></i> Add First Product
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * FeedbackHub - Application JavaScript
  * Experiment 07 - ASP.NET Core MVC
  */

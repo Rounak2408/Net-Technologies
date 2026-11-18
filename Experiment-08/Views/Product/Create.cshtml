@@ -1,0 +1,131 @@
+@model Experiment_08.Models.Product
+
+@{
+    ViewData["Title"] = "Add New Product";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a asp-action="Index" class="text-navy">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Product</li>
+            </ol>
+        </nav>
+
+        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+            <div class="card-header bg-navy text-white p-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-plus-circle me-2 text-cyan"></i>Add New Product</h4>
+                        <p class="text-white-50 small mb-0">Enter product information to record into SQL Server via ADO.NET</p>
+                    </div>
+                    <span class="badge bg-navy-light text-cyan px-3 py-2 rounded-pill small">
+                        <i class="bi bi-database me-1"></i> ADO.NET INSERT
+                    </span>
+                </div>
+            </div>
+
+            <div class="card-body p-4 p-md-5">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger shadow-sm border-0 mb-4" role="alert"></div>
+
+                    <div class="row g-3">
+                        <!-- Product Name -->
+                        <div class="col-md-8">
+                            <div class="form-group mb-3">
+                                <label asp-for="ProductName" class="form-label fw-semibold"></label>
+                                <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="bi bi-tag text-navy"></i></span>
+                                    <input asp-for="ProductName" class="form-control" placeholder="e.g. Dell XPS 15 Laptop" />
+                                </div>
+                                <span asp-validation-for="ProductName" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label asp-for="Category" class="form-label fw-semibold"></label>
+                                <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="bi bi-grid text-navy"></i></span>
+                                    <select asp-for="Category" asp-items="ViewBag.Categories" class="form-select">
+                                        <option value="">-- Select --</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Category" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Quantity" class="form-label fw-semibold"></label>
+                                <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="bi bi-stack text-navy"></i></span>
+                                    <input asp-for="Quantity" type="number" min="0" class="form-control" placeholder="0" />
+                                </div>
+                                <span asp-validation-for="Quantity" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <!-- Unit Price -->
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="UnitPrice" class="form-label fw-semibold"></label>
+                                <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="bi bi-currency-dollar text-navy"></i></span>
+                                    <input asp-for="UnitPrice" type="number" step="0.01" min="0.01" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="UnitPrice" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <!-- Supplier Name -->
+                        <div class="col-12">
+                            <div class="form-group mb-3">
+                                <label asp-for="SupplierName" class="form-label fw-semibold"></label>
+                                <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="bi bi-building text-navy"></i></span>
+                                    <input asp-for="SupplierName" class="form-control" placeholder="e.g. Dell Global Logistics Ltd." />
+                                </div>
+                                <span asp-validation-for="SupplierName" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-12">
+                            <div class="form-group mb-4">
+                                <label asp-for="Description" class="form-label fw-semibold"></label>
+                                <textarea asp-for="Description" rows="3" class="form-control" placeholder="Enter product specifications, notes or model numbers..."></textarea>
+                                <span asp-validation-for="Description" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="col-12 d-flex gap-3 pt-3 border-top">
+                            <button type="submit" class="btn btn-navy px-4 py-2 rounded-pill shadow-sm d-flex align-items-center">
+                                <i class="bi bi-save me-2"></i> Save Product
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 rounded-pill">
+                                Cancel
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
