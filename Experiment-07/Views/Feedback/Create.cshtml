@@ -1,0 +1,110 @@
+@model Experiment_07.Models.Feedback
+
+@{
+    ViewData["Title"] = "Submit Feedback - FeedbackHub";
+}
+
+<!-- Page Header Breadcrumb -->
+<div class="page-title-banner py-4 mb-4">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1 small">
+                        <li class="breadcrumb-item"><a asp-controller="Feedback" asp-action="Index" class="text-white-50">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Submit Feedback</li>
+                    </ol>
+                </nav>
+                <h2 class="fw-bold text-white mb-0">Submit Your Feedback</h2>
+            </div>
+            <div class="mt-2 mt-md-0">
+                <a asp-controller="Feedback" asp-action="List" class="btn btn-outline-light rounded-pill px-3 py-2 small">
+                    <i class="bi bi-collection me-1"></i> View Submitted Feedback
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-4">
+        <!-- Main Form Column (Uses Partial View _FeedbackForm) -->
+        <div class="col-lg-8">
+            <div class="card form-card border-0 shadow-sm rounded-4 bg-white">
+                <div class="card-header bg-white border-bottom p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h4 class="fw-bold text-navy mb-1">Feedback Submission Form</h4>
+                            <p class="text-muted small mb-0">Fill in the fields below. All fields marked with (<span class="text-danger">*</span>) are mandatory.</p>
+                        </div>
+                        <div class="form-badge bg-navy-light text-cyan px-3 py-2 rounded-pill small fw-semibold d-none d-sm-block">
+                            <i class="bi bi-pencil-square me-1"></i> Model Validated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Reusable Partial View: _FeedbackForm.cshtml -->
+                    @await Html.PartialAsync("_FeedbackForm", Model)
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Guidelines Column -->
+        <div class="col-lg-4">
+            <!-- Validation Rules Card -->
+            <div class="card border-0 shadow-sm rounded-4 bg-white mb-4">
+                <div class="card-header bg-navy text-white p-3 rounded-top-4">
+                    <h6 class="fw-bold mb-0">
+                        <i class="bi bi-shield-check me-2 text-cyan"></i>Validation Constraints
+                    </h6>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item px-0 py-2 d-flex align-items-start border-0">
+                            <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                            <div><strong>Full Name:</strong> Required, 3–100 characters.</div>
+                        </li>
+                        <li class="list-group-item px-0 py-2 d-flex align-items-start border-0">
+                            <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                            <div><strong>Email Address:</strong> Valid standard email format.</div>
+                        </li>
+                        <li class="list-group-item px-0 py-2 d-flex align-items-start border-0">
+                            <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                            <div><strong>Phone Number:</strong> Exactly 10 digits numeric regex.</div>
+                        </li>
+                        <li class="list-group-item px-0 py-2 d-flex align-items-start border-0">
+                            <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                            <div><strong>Category:</strong> Course, Faculty, Infrastructure, Other.</div>
+                        </li>
+                        <li class="list-group-item px-0 py-2 d-flex align-items-start border-0">
+                            <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                            <div><strong>Star Rating:</strong> Required range 1 to 5.</div>
+                        </li>
+                        <li class="list-group-item px-0 py-2 d-flex align-items-start border-0">
+                            <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                            <div><strong>Message:</strong> Minimum 10 characters required.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Helpful Hints Card -->
+            <div class="card border-0 shadow-sm rounded-4 bg-navy-light text-navy p-4">
+                <h6 class="fw-bold mb-2">
+                    <i class="bi bi-lightbulb-fill text-warning me-2"></i>Feedback Tips
+                </h6>
+                <p class="small text-secondary mb-2">
+                    Constructive feedback helps in institutional reviews and continuous syllabus upgrades.
+                </p>
+                <div class="small text-secondary">
+                    <i class="bi bi-info-circle me-1"></i> Both client-side jQuery validation and server-side ASP.NET Core ModelState verification are strictly enforced.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

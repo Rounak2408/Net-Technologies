@@ -1,0 +1,116 @@
+@model IEnumerable<Experiment_07.Models.Feedback>
+
+@{
+    ViewData["Title"] = "All Feedback Submissions - FeedbackHub";
+    string currentCategory = ViewBag.CurrentCategory as string ?? "All";
+    int totalCount = ViewBag.TotalCount ?? 0;
+    double avgRating = ViewBag.AverageRating ?? 0.0;
+    var catCounts = ViewBag.CategoryCounts as Dictionary<string, int> ?? new Dictionary<string, int>();
+}
+
+<!-- Page Header Banner -->
+<div class="page-title-banner py-4 mb-4">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1 small">
+                        <li class="breadcrumb-item"><a asp-controller="Feedback" asp-action="Index" class="text-white-50">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">View Feedback</li>
+                    </ol>
+                </nav>
+                <h2 class="fw-bold text-white mb-0">Submitted Feedback Records</h2>
+            </div>
+            <div class="mt-2 mt-md-0 d-flex gap-2">
+                <a asp-controller="Feedback" asp-action="Create" class="btn btn-accent rounded-pill px-4 py-2 small fw-semibold shadow-sm">
+                    <i class="bi bi-plus-circle-fill me-1"></i> Submit New Feedback
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <!-- Filter & Analytics Header Bar -->
+    <div class="card border-0 shadow-sm rounded-4 bg-white p-3 mb-4">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <!-- Category Filter Pills -->
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <span class="text-muted small fw-semibold me-2 d-none d-md-inline">Filter:</span>
+                
+                <a asp-controller="Feedback" asp-action="List" asp-route-category="All" 
+                   class="btn btn-sm rounded-pill px-3 py-1 fw-semibold @(currentCategory == "All" ? "btn-navy" : "btn-light text-navy")">
+                    All <span class="badge @(currentCategory == "All" ? "bg-light text-navy" : "bg-navy text-white") ms-1 rounded-pill">@totalCount</span>
+                </a>
+                
+                <a asp-controller="Feedback" asp-action="List" asp-route-category="Course" 
+                   class="btn btn-sm rounded-pill px-3 py-1 fw-semibold @(currentCategory == "Course" ? "btn-navy" : "btn-light text-navy")">
+                    <i class="bi bi-book-half me-1"></i> Course <span class="badge @(currentCategory == "Course" ? "bg-light text-navy" : "bg-secondary text-white") ms-1 rounded-pill">@catCounts.GetValueOrDefault("Course", 0)</span>
+                </a>
+                
+                <a asp-controller="Feedback" asp-action="List" asp-route-category="Faculty" 
+                   class="btn btn-sm rounded-pill px-3 py-1 fw-semibold @(currentCategory == "Faculty" ? "btn-navy" : "btn-light text-navy")">
+                    <i class="bi bi-person-workspace me-1"></i> Faculty <span class="badge @(currentCategory == "Faculty" ? "bg-light text-navy" : "bg-secondary text-white") ms-1 rounded-pill">@catCounts.GetValueOrDefault("Faculty", 0)</span>
+                </a>
+                
+                <a asp-controller="Feedback" asp-action="List" asp-route-category="Infrastructure" 
+                   class="btn btn-sm rounded-pill px-3 py-1 fw-semibold @(currentCategory == "Infrastructure" ? "btn-navy" : "btn-light text-navy")">
+                    <i class="bi bi-buildings me-1"></i> Infrastructure <span class="badge @(currentCategory == "Infrastructure" ? "bg-light text-navy" : "bg-secondary text-white") ms-1 rounded-pill">@catCounts.GetValueOrDefault("Infrastructure", 0)</span>
+                </a>
+                
+                <a asp-controller="Feedback" asp-action="List" asp-route-category="Other" 
+                   class="btn btn-sm rounded-pill px-3 py-1 fw-semibold @(currentCategory == "Other" ? "btn-navy" : "btn-light text-navy")">
+                    <i class="bi bi-chat-left-dots me-1"></i> Other <span class="badge @(currentCategory == "Other" ? "bg-light text-navy" : "bg-secondary text-white") ms-1 rounded-pill">@catCounts.GetValueOrDefault("Other", 0)</span>
+                </a>
+            </div>
+
+            <!-- Average Rating Summary -->
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <span class="small text-muted">Average Rating:</span>
+                <span class="badge bg-warning-subtle text-warning-emphasis fs-6 fw-bold border px-3 py-1 rounded-pill">
+                    <i class="bi bi-star-fill text-warning me-1"></i> @avgRating.ToString("0.0") / 5.0
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Cards Listing or Empty State -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var feedback in Model)
+            {
+                <!-- Reusable Partial View: _FeedbackCard.cshtml -->
+                @await Html.PartialAsync("_FeedbackCard", feedback)
+            }
+        </div>
+    }
+    else
+    {
+        <!-- Empty State UI -->
+        <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white my-4">
+            <div class="empty-state-icon mx-auto mb-3">
+                <div class="empty-icon-circle bg-light text-muted d-flex align-items-center justify-content-center mx-auto">
+                    <i class="bi bi-chat-square-dots fs-1"></i>
+                </div>
+            </div>
+            <h4 class="fw-bold text-navy mb-2">No Feedback Records Found</h4>
+            <p class="text-muted max-w-500 mx-auto mb-4">
+                @(currentCategory != "All" 
+                    ? $"There are currently no feedback submissions under the '{currentCategory}' category." 
+                    : "There are currently no feedback submissions in the database.")
+            </p>
+            <div class="d-flex justify-content-center gap-2">
+                @if (currentCategory != "All")
+                {
+                    <a asp-controller="Feedback" asp-action="List" asp-route-category="All" class="btn btn-outline-navy rounded-pill px-4 py-2">
+                        <i class="bi bi-funnel me-1"></i> Show All Categories
+                    </a>
+                }
+                <a asp-controller="Feedback" asp-action="Create" class="btn btn-navy rounded-pill px-4 py-2">
+                    <i class="bi bi-plus-circle me-1"></i> Submit First Feedback
+                </a>
+            </div>
+        </div>
+    }
+</div>

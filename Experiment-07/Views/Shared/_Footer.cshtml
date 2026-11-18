@@ -1,0 +1,66 @@
+<footer class="footer-custom mt-auto">
+    <div class="footer-top py-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-5 col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="brand-icon-wrapper me-2 sm">
+                            <i class="bi bi-chat-square-quote-fill"></i>
+                        </div>
+                        <span class="fs-5 fw-bold text-white">FeedbackHub</span>
+                    </div>
+                    <p class="text-footer-muted mb-3 small">
+                        A modern, professional Feedback Management System designed with ASP.NET Core MVC architecture. Built for seamless collection, validation, and analytics of institutional feedback.
+                    </p>
+                    <div class="badge bg-navy-light text-cyan px-3 py-2 rounded-pill small">
+                        <i class="bi bi-mortarboard-fill me-1"></i> Net Technologies Practical – Experiment 07
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-white fw-bold mb-3 text-uppercase tracking-wider small">Quick Navigation</h6>
+                    <ul class="list-unstyled footer-links mb-0 small">
+                        <li class="mb-2">
+                            <a asp-controller="Feedback" asp-action="Index">
+                                <i class="bi bi-chevron-right me-1 text-cyan"></i> Dashboard Home
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a asp-controller="Feedback" asp-action="Create">
+                                <i class="bi bi-chevron-right me-1 text-cyan"></i> Submit Feedback Form
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a asp-controller="Feedback" asp-action="List">
+                                <i class="bi bi-chevron-right me-1 text-cyan"></i> Browse All Feedback
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <h6 class="text-white fw-bold mb-3 text-uppercase tracking-wider small">Architecture Highlights</h6>
+                    <div class="d-flex flex-wrap gap-2 small">
+                        <span class="tech-badge"><i class="bi bi-layers me-1"></i> ASP.NET Core MVC</span>
+                        <span class="tech-badge"><i class="bi bi-code-slash me-1"></i> Razor Views</span>
+                        <span class="tech-badge"><i class="bi bi-input-cursor me-1"></i> HTML Helpers</span>
+                        <span class="tech-badge"><i class="bi bi-shield-check me-1"></i> Data Annotations</span>
+                        <span class="tech-badge"><i class="bi bi-stars me-1"></i> Star Rating UI</span>
+                        <span class="tech-badge"><i class="bi bi-bootstrap me-1"></i> Bootstrap 5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom py-3 border-top border-navy-light">
+        <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between small text-footer-muted">
+            <div>
+                &copy; @DateTime.Now.Year <span class="text-white fw-semibold">FeedbackHub</span>. All rights reserved.
+            </div>
+            <div class="mt-2 mt-md-0">
+                <span>Designed & Developed for College Practical Examination</span>
+            </div>
+        </div>
+    </div>
+</footer>

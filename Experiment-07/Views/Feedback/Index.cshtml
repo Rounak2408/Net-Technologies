@@ -1,0 +1,207 @@
+@model IEnumerable<Experiment_07.Models.Feedback>
+
+@{
+    ViewData["Title"] = "Dashboard - FeedbackHub";
+    int totalCount = ViewBag.TotalCount ?? 0;
+    double avgRating = ViewBag.AverageRating ?? 0.0;
+    var catCounts = ViewBag.CategoryCounts as Dictionary<string, int> ?? new Dictionary<string, int>();
+}
+
+<!-- Hero Banner -->
+<section class="hero-section py-5 mb-4 text-white">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <div class="d-inline-flex align-items-center bg-navy-light text-cyan px-3 py-1 rounded-pill mb-3 small fw-semibold">
+                    <i class="bi bi-shield-check me-2"></i> ASP.NET Core MVC Feedback System
+                </div>
+                <h1 class="display-5 fw-bold mb-3 tracking-tight">
+                    Institutional Feedback & Experience Portal
+                </h1>
+                <p class="lead text-light-blue opacity-90 mb-4 pe-lg-5">
+                    Empowering students and faculty to share voice, evaluate academic curriculum, and enhance institutional infrastructure through structured feedback collection.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-controller="Feedback" asp-action="Create" class="btn btn-accent btn-lg px-4 py-3 rounded-pill shadow-sm fw-semibold">
+                        <i class="bi bi-plus-circle-fill me-2"></i> Submit New Feedback
+                    </a>
+                    <a asp-controller="Feedback" asp-action="List" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-semibold">
+                        <i class="bi bi-card-checklist me-2"></i> Browse All Feedback (@totalCount)
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="hero-card-preview p-4 rounded-4 shadow-lg bg-white text-dark">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="badge bg-primary-subtle text-primary fw-bold">Live Portal</span>
+                        <div class="text-warning">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                    </div>
+                    <h6 class="fw-bold text-navy mb-1">Your Voice Matters!</h6>
+                    <p class="small text-muted mb-3">
+                        Every response is analyzed to drive continuous improvements across academic and administrative departments.
+                    </p>
+                    <div class="p-3 bg-light rounded-3 d-flex justify-content-between align-items-center">
+                        <span class="small fw-semibold text-secondary">Overall Satisfaction</span>
+                        <span class="fs-5 fw-bold text-navy">@(avgRating > 0 ? avgRating.ToString("0.0") : "N/A") / 5.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mb-5">
+    <!-- Analytics & Stats Grid -->
+    <div class="row g-3 mb-5">
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-muted small fw-semibold text-uppercase tracking-wider">Total Submissions</span>
+                        <h2 class="display-6 fw-bold text-navy mt-1 mb-0">@totalCount</h2>
+                        <span class="badge bg-success-subtle text-success mt-2 small">
+                            <i class="bi bi-arrow-up-right me-1"></i>Active Records
+                        </span>
+                    </div>
+                    <div class="stat-icon-box bg-navy-subtle text-navy">
+                        <i class="bi bi-chat-left-text-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-muted small fw-semibold text-uppercase tracking-wider">Average Rating</span>
+                        <h2 class="display-6 fw-bold text-navy mt-1 mb-0">@avgRating.ToString("0.0")</h2>
+                        <div class="text-warning mt-2 small">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= Math.Round(avgRating))
+                                {
+                                    <i class="bi bi-star-fill"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-star"></i>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="stat-icon-box bg-warning-subtle text-warning">
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-muted small fw-semibold text-uppercase tracking-wider">Academic (Course & Faculty)</span>
+                        <h2 class="display-6 fw-bold text-navy mt-1 mb-0">
+                            @((catCounts.GetValueOrDefault("Course", 0)) + (catCounts.GetValueOrDefault("Faculty", 0)))
+                        </h2>
+                        <span class="badge bg-info-subtle text-info-emphasis mt-2 small">
+                            Course: @catCounts.GetValueOrDefault("Course", 0) | Faculty: @catCounts.GetValueOrDefault("Faculty", 0)
+                        </span>
+                    </div>
+                    <div class="stat-icon-box bg-info-subtle text-info">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-muted small fw-semibold text-uppercase tracking-wider">Campus & Other</span>
+                        <h2 class="display-6 fw-bold text-navy mt-1 mb-0">
+                            @((catCounts.GetValueOrDefault("Infrastructure", 0)) + (catCounts.GetValueOrDefault("Other", 0)))
+                        </h2>
+                        <span class="badge bg-warning-subtle text-warning-emphasis mt-2 small">
+                            Infra: @catCounts.GetValueOrDefault("Infrastructure", 0) | Other: @catCounts.GetValueOrDefault("Other", 0)
+                        </span>
+                    </div>
+                    <div class="stat-icon-box bg-secondary-subtle text-secondary">
+                        <i class="bi bi-buildings-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Feedback Section -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="fw-bold text-navy mb-1">Recent Feedback Submissions</h3>
+            <p class="text-muted small mb-0">Latest thoughts and evaluation submitted by students and staff</p>
+        </div>
+        <div class="mt-2 mt-sm-0">
+            <a asp-controller="Feedback" asp-action="List" class="btn btn-outline-navy rounded-pill px-3 py-2 small fw-semibold">
+                View All Feedback <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var feedback in Model.Take(4))
+            {
+                @await Html.PartialAsync("_FeedbackCard", feedback)
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+            <div class="empty-icon-box mx-auto mb-3 text-muted">
+                <i class="bi bi-inbox fs-1"></i>
+            </div>
+            <h4 class="fw-bold text-navy">No Feedback Submitted Yet</h4>
+            <p class="text-muted mb-4">Be the first one to submit feedback through our interactive form.</p>
+            <div>
+                <a asp-controller="Feedback" asp-action="Create" class="btn btn-navy rounded-pill px-4 py-2">
+                    <i class="bi bi-plus-circle me-1"></i> Submit Feedback
+                </a>
+            </div>
+        </div>
+    }
+
+    <!-- Architecture & Features Showcase -->
+    <div class="mt-5 p-4 bg-white rounded-4 shadow-sm border">
+        <h5 class="fw-bold text-navy mb-3">
+            <i class="bi bi-cpu text-accent me-2"></i>Technical Specification & Architectural Implementation
+        </h5>
+        <div class="row g-4 small text-secondary">
+            <div class="col-md-3">
+                <div class="fw-bold text-dark mb-1"><i class="bi bi-check2-circle text-success me-1"></i> Razor HTML Helpers</div>
+                <span>Forms built using <code>Html.BeginForm</code>, <code>Html.TextBoxFor</code>, <code>Html.DropDownListFor</code>, etc.</span>
+            </div>
+            <div class="col-md-3">
+                <div class="fw-bold text-dark mb-1"><i class="bi bi-check2-circle text-success me-1"></i> Robust Validation</div>
+                <span>Dual client-side & server-side validation via Data Annotations and jQuery Unobtrusive.</span>
+            </div>
+            <div class="col-md-3">
+                <div class="fw-bold text-dark mb-1"><i class="bi bi-check2-circle text-success me-1"></i> Partial Views</div>
+                <span>Modular rendering with <code>_Header</code>, <code>_Footer</code>, <code>_FeedbackForm</code>, and <code>_FeedbackCard</code>.</span>
+            </div>
+            <div class="col-md-3">
+                <div class="fw-bold text-dark mb-1"><i class="bi bi-check2-circle text-success me-1"></i> TempData Notifications</div>
+                <span>Stateful flash alerts for create and delete operations across HTTP redirects.</span>
+            </div>
+        </div>
+    </div>
+</div>

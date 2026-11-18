@@ -1,0 +1,124 @@
+@model Experiment_07.Models.Feedback
+
+@using (Html.BeginForm("Create", "Feedback", FormMethod.Post, new { @id = "feedbackForm", @class = "feedback-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "Please correct the following errors before submitting:", new { @class = "alert alert-danger shadow-sm border-0 mb-4" })
+
+    <div class="row g-3">
+        <!-- Full Name -->
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.FullName, new { @class = "form-label fw-semibold" })
+                <span class="text-danger">*</span>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-person text-navy"></i></span>
+                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control border-start-0 ps-1", placeholder = "e.g. Aarav Sharma", autocomplete = "name" })
+                </div>
+                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger small mt-1 d-block" })
+            </div>
+        </div>
+
+        <!-- Email Address -->
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Email, new { @class = "form-label fw-semibold" })
+                <span class="text-danger">*</span>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-navy"></i></span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control border-start-0 ps-1", placeholder = "e.g. student@college.edu", type = "email", autocomplete = "email" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small mt-1 d-block" })
+            </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Phone, new { @class = "form-label fw-semibold" })
+                <span class="text-danger">*</span>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-telephone text-navy"></i></span>
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control border-start-0 ps-1", placeholder = "10-digit mobile number", maxlength = "10" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger small mt-1 d-block" })
+            </div>
+        </div>
+
+        <!-- Feedback Category -->
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Category, new { @class = "form-label fw-semibold" })
+                <span class="text-danger">*</span>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-grid text-navy"></i></span>
+                    @Html.DropDownListFor(m => m.Category, (IEnumerable<SelectListItem>)ViewBag.Categories, "-- Select Category --", new { @class = "form-select border-start-0 ps-1" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Category, "", new { @class = "text-danger small mt-1 d-block" })
+            </div>
+        </div>
+
+        <!-- Star Rating UI -->
+        <div class="col-12">
+            <div class="form-group mb-3 p-3 bg-light-subtle rounded-3 border">
+                @Html.LabelFor(m => m.Rating, new { @class = "form-label fw-semibold mb-1 d-block" })
+                <p class="text-muted small mb-2">Select your overall rating from 1 to 5 stars:</p>
+                
+                <div class="star-rating-container d-flex flex-wrap align-items-center gap-2">
+                    <div class="star-rating-widget" id="starRatingWidget">
+                        <i class="bi bi-star-fill star-item" data-value="1" title="1 - Poor"></i>
+                        <i class="bi bi-star-fill star-item" data-value="2" title="2 - Fair"></i>
+                        <i class="bi bi-star-fill star-item" data-value="3" title="3 - Good"></i>
+                        <i class="bi bi-star-fill star-item" data-value="4" title="4 - Very Good"></i>
+                        <i class="bi bi-star-fill star-item" data-value="5" title="5 - Outstanding"></i>
+                    </div>
+                    @Html.HiddenFor(m => m.Rating, new { @id = "ratingValue" })
+                    <span class="rating-label fw-bold text-navy ms-2" id="ratingLabel">5 Stars - Outstanding</span>
+                </div>
+                @Html.ValidationMessageFor(m => m.Rating, "", new { @class = "text-danger small mt-1 d-block" })
+            </div>
+        </div>
+
+        <!-- Subject -->
+        <div class="col-12">
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Subject, new { @class = "form-label fw-semibold" })
+                <span class="text-danger">*</span>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-tag text-navy"></i></span>
+                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control border-start-0 ps-1", placeholder = "Brief subject of your feedback" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger small mt-1 d-block" })
+            </div>
+        </div>
+
+        <!-- Message -->
+        <div class="col-12">
+            <div class="form-group mb-4">
+                @Html.LabelFor(m => m.Message, new { @class = "form-label fw-semibold" })
+                <span class="text-danger">*</span>
+                <div class="position-relative">
+                    @Html.TextAreaFor(m => m.Message, new { @class = "form-control", rows = "4", placeholder = "Share your detailed feedback here (minimum 10 characters)...", id = "feedbackMessage" })
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-1">
+                    @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger small d-block" })
+                    <span class="text-muted small" id="charCounter">0 characters</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="col-12 d-flex flex-wrap align-items-center gap-3 pt-3 border-top">
+            <button type="submit" class="btn btn-navy px-4 py-2 rounded-pill shadow-sm d-flex align-items-center">
+                <i class="bi bi-send-fill me-2"></i> Submit Feedback
+            </button>
+            <button type="reset" class="btn btn-outline-secondary px-4 py-2 rounded-pill" id="resetBtn">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+            </button>
+            <a asp-controller="Feedback" asp-action="List" class="btn btn-link text-decoration-none text-navy ms-md-auto">
+                <i class="bi bi-arrow-left me-1"></i> View All Feedback
+            </a>
+        </div>
+    </div>
+}

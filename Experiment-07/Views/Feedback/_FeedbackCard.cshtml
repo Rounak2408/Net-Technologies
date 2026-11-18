@@ -1,0 +1,106 @@
+@model Experiment_07.Models.Feedback
+
+@{
+    var categoryBadgeClass = Model.Category switch
+    {
+        "Course" => "badge-cat-course",
+        "Faculty" => "badge-cat-faculty",
+        "Infrastructure" => "badge-cat-infra",
+        _ => "badge-cat-other"
+    };
+
+    var categoryIcon = Model.Category switch
+    {
+        "Course" => "bi-book-half",
+        "Faculty" => "bi-person-workspace",
+        "Infrastructure" => "bi-buildings",
+        _ => "bi-chat-left-dots"
+    };
+
+    // Extract initials for avatar
+    var initials = "U";
+    if (!string.IsNullOrWhiteSpace(Model.FullName))
+    {
+        var parts = Model.FullName.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        initials = parts.Length > 1 
+            ? $"{parts[0][0]}{parts[^1][0]}".ToUpper() 
+            : parts[0].Length > 0 ? parts[0][0].ToString().ToUpper() : "U";
+    }
+}
+
+<div class="col-lg-6 col-12 mb-4">
+    <div class="card feedback-card h-100 shadow-sm border-0 position-relative">
+        <!-- Top accent line -->
+        <div class="card-accent-bar cat-@Model.Category.ToLower()"></div>
+
+        <div class="card-body p-4 d-flex flex-column">
+            <!-- Header: User Avatar, Name & Category Badge -->
+            <div class="d-flex align-items-start justify-content-between mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="user-avatar me-3">
+                        @initials
+                    </div>
+                    <div>
+                        <h6 class="card-title fw-bold mb-0 text-navy">@Model.FullName</h6>
+                        <span class="text-muted small">
+                            <i class="bi bi-clock me-1"></i>@Model.SubmissionDate.ToString("dd MMM yyyy, hh:mm tt")
+                        </span>
+                    </div>
+                </div>
+                <span class="badge @categoryBadgeClass rounded-pill px-3 py-2 small fw-semibold">
+                    <i class="bi @categoryIcon me-1"></i> @Model.Category
+                </span>
+            </div>
+
+            <!-- Rating Stars -->
+            <div class="mb-3 d-flex align-items-center gap-2">
+                <div class="rating-stars-display" aria-label="@Model.Rating out of 5 stars">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Rating)
+                        {
+                            <i class="bi bi-star-fill text-warning"></i>
+                        }
+                        else
+                        {
+                            <i class="bi bi-star text-muted opacity-50"></i>
+                        }
+                    }
+                </div>
+                <span class="badge bg-light text-navy border fw-bold small">
+                    @Model.Rating.0 / 5.0
+                </span>
+            </div>
+
+            <!-- Subject & Message -->
+            <h5 class="fw-bold text-dark mb-2 fs-6">@Model.Subject</h5>
+            <div class="feedback-message-box p-3 bg-light-subtle rounded-3 mb-3 flex-grow-1">
+                <p class="card-text text-secondary mb-0 feedback-text">
+                    <i class="bi bi-quote text-navy opacity-50 me-1"></i>@Model.Message
+                </p>
+            </div>
+
+            <!-- Contact Metadata & Actions Footer -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between pt-3 border-top gap-2 mt-auto">
+                <div class="d-flex flex-wrap align-items-center gap-3 text-muted small">
+                    <span title="Email Address">
+                        <i class="bi bi-envelope-at text-navy me-1"></i>@Model.Email
+                    </span>
+                    <span title="Phone Number">
+                        <i class="bi bi-telephone text-navy me-1"></i>@Model.Phone
+                    </span>
+                </div>
+
+                <!-- Delete Feedback Form (POST) -->
+                <div>
+                    <form asp-controller="Feedback" asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete feedback #@Model.Id from @Model.FullName?');">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 delete-btn" title="Delete Feedback">
+                            <i class="bi bi-trash3 me-1"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

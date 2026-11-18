@@ -10,6 +10,7 @@ This repository contains practical implementations for Net Technologies.
 *   [Experiment-04](Experiment-04/Default.aspx): Online Student Event Registration Portal using ASP.NET Controls & Validation
 *   [Experiment-05](Experiment-05/Default.aspx): Academic Calendar & Leave Management System using ASP.NET Rich Controls, Session State & Cookies
 *   [Experiment-06](Experiment-06/Program.cs): Product Catalog Application using ASP.NET Core MVC Architecture (Controllers, Models, Views, Routing)
+*   [Experiment-07](Experiment-07/Program.cs): Feedback Management Module using ASP.NET Core MVC Architecture (Controllers, Models, Views, Partial Views, HTML Helpers, Data Annotations)
 
 
 
